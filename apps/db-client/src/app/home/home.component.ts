@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import {
   FormBuilder,
   FormGroup,
@@ -26,6 +27,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent {
   private fb = inject(FormBuilder);
+  private http = inject(HttpClient);
 
   signInForm: FormGroup;
   loading = false;
@@ -42,10 +44,17 @@ export class HomeComponent {
       this.loading = true;
       const formData = this.signInForm.value;
 
-      setTimeout(() => {
-        console.log('Sign in data:', formData);
-        this.loading = false;
-      }, 2000);
+      this.http.get('http://localhost:3000/api').subscribe({
+        next: (response) => {
+          console.log('API Response:', response);
+          console.log('Sign in data:', formData);
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('API Error:', error);
+          this.loading = false;
+        },
+      });
     } else {
       this.markFormGroupTouched();
     }

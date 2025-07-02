@@ -123,37 +123,52 @@
 
 ::ng-deep {
   .p-inputtext, .p-password input {
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 0.875rem 1.25rem;
-    font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.3s ease;
-    background: white;
-    color: #1f2937;
+    border: 2px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    padding: 0.875rem 1.25rem !important;
+    font-size: 1rem !important;
+    font-family: 'Inter', sans-serif !important;
+    transition: all 0.3s ease !important;
+    background: white !important;
+    color: #1f2937 !important;
     
     &::placeholder {
-      color: #9ca3af;
-      font-family: 'Inter', sans-serif;
+      color: #9ca3af !important;
+      font-family: 'Inter', sans-serif !important;
     }
     
     &:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-      outline: none;
-      background: white;
-      color: #1f2937;
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+      outline: none !important;
+      background: white !important;
+      color: #1f2937 !important;
+    }
+    
+    &:hover {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+    
+    &:active {
+      background: white !important;
+      color: #1f2937 !important;
     }
     
     &.ng-invalid.ng-touched {
-      border-color: #ef4444;
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+      background: white !important;
+      color: #1f2937 !important;
     }
   }
   
   .p-password {
     .p-password-input {
       width: 100%;
+      background: white !important;
+      color: #1f2937 !important;
     }
     
     .p-password-toggle-icon {
@@ -165,13 +180,18 @@
     }
   }
   
+  .p-inputtext:not(:focus) {
+    background: white !important;
+    color: #1f2937 !important;
+  }
+  
   .p-card {
-    background: white;
-    color: #1f2937;
+    background: white !important;
+    color: #1f2937 !important;
   }
   
   .p-card-body {
-    background: white;
-    color: #1f2937;
+    background: white !important;
+    color: #1f2937 !important;
   }
 }
