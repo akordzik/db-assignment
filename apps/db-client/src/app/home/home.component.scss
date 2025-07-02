@@ -1,5 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 .home {
   width: 100%;
   height: 100vh;
-  background-color: #ffffff;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.signin-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.signin-card {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  
+  ::ng-deep .p-card-header {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    border: none;
+    padding: 2.5rem 2rem 2rem 2rem;
+  }
+  
+  ::ng-deep .p-card-body {
+    padding: 2rem;
+    background: white;
+  }
+}
+
+.card-header {
+  text-align: center;
+  color: white;
+  
+  h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.25rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  p {
+    margin: 0;
+    opacity: 0.95;
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.signin-form {
+  .form-field {
+    margin-bottom: 1.75rem;
+    
+    label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    input, ::ng-deep .p-password {
+      width: 100%;
+      
+      input {
+        width: 100%;
+      }
+    }
+    
+    .p-error {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #ef4444;
+      font-family: 'Inter', sans-serif;
+    }
+  }
+  
+  .form-actions {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    
+    .signin-button {
+      width: 80%;
+      max-width: 280px;
+      
+      ::ng-deep .p-button {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        border: none;
+        padding: 0.875rem 1.5rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        color: white;
+        width: 100%;
+        
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+          background: linear-gradient(135deg, #5b5ff0 0%, #8a5af5 100%);
+        }
+        
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          background: #9ca3af;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .p-inputtext, .p-password input {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+    color: #1f2937;
+    
+    &::placeholder {
+      color: #9ca3af;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    &:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      outline: none;
+      background: white;
+      color: #1f2937;
+    }
+    
+    &.ng-invalid.ng-touched {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+  }
+  
+  .p-password {
+    .p-password-input {
+      width: 100%;
+    }
+    
+    .p-password-toggle-icon {
+      color: #6b7280;
+      
+      &:hover {
+        color: #6366f1;
+      }
+    }
+  }
+  
+  .p-card {
+    background: white;
+    color: #1f2937;
+  }
+  
+  .p-card-body {
+    background: white;
+    color: #1f2937;
+  }
 }

@@ -1,2 +1,40 @@
 <div class="home">
+  <div class="signin-container">
+    <p-card class="signin-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account</p>
+        </div>
+      </ng-template>
+
+      <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="signin-form">
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input pInputText id="email" type="email" formControlName="email" placeholder="Enter your email"
+            [class.ng-invalid]="email?.invalid && email?.touched" />
+          <small class="p-error" *ngIf="email?.invalid && email?.touched">
+            <span *ngIf="email?.errors?.['required']">Email is required.</span>
+            <span *ngIf="email?.errors?.['email']">Please enter a valid email.</span>
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="password">Password</label>
+          <p-password id="password" formControlName="password" placeholder="Enter your password" [toggleMask]="true"
+            [feedback]="false" [class.ng-invalid]="password?.invalid && password?.touched" styleClass="w-full" />
+          <small class="p-error" *ngIf="password?.invalid && password?.touched">
+            <span *ngIf="password?.errors?.['required']">Password is required.</span>
+            <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters.</span>
+          </small>
+        </div>
+
+        <div class="form-actions">
+          <p-button type="submit" label="Sign In" [loading]="loading" [disabled]="signInForm.invalid"
+            styleClass="w-full signin-button" />
+        </div>
+
+      </form>
+    </p-card>
+  </div>
 </div>
