@@ -1,0 +1,10 @@
+CREATE SCHEMA IF NOT EXISTS deskbird;
+
+CREATE TABLE IF NOT EXISTS deskbird.user (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    sub_id UUID NOT NULL,
+    name VARCHAR NOT NULL,
+    email VARCHAR NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

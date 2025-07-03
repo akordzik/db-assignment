@@ -44,3 +44,13 @@ Thumbs.db
 .github/instructions/nx.instructions.md
 
 .angular
+
+# Prisma
+/generated/prisma
+apps/*/generated/
+apps/*/.env
+apps/*/.env.local
+
+# Database
+*.db
+*.sqlite
