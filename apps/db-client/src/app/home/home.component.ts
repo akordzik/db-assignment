@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import {
   FormBuilder,
   FormGroup,
+  FormControl,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms'
@@ -11,17 +12,7 @@ import { InputTextModule } from 'primeng/inputtext'
 import { PasswordModule } from 'primeng/password'
 import { ButtonModule } from 'primeng/button'
 import { CommonModule } from '@angular/common'
-
-interface SignInResponse {
-  success: boolean
-  message: string
-  user?: {
-    id: string
-    email: string
-    name: string
-  }
-  token?: string
-}
+import { SignInResponse, SignInDto } from '@deskbird/interfaces'
 
 @Component({
   selector: 'app-home',
@@ -40,20 +31,28 @@ export class HomeComponent {
   private fb = inject(FormBuilder)
   private http = inject(HttpClient)
 
-  signInForm: FormGroup
+  signInForm: FormGroup<{
+    [K in keyof SignInDto]: FormControl<SignInDto[K]>
+  }>
   loading = false
 
   constructor() {
     this.signInForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: this.fb.control('', {
+        validators: [Validators.required, Validators.email],
+        nonNullable: true,
+      }),
+      password: this.fb.control('', {
+        validators: [Validators.required, Validators.minLength(6)],
+        nonNullable: true,
+      }),
     })
   }
 
   onSubmit() {
     if (this.signInForm.valid) {
       this.loading = true
-      const formData = this.signInForm.value
+      const formData = this.signInForm.getRawValue()
 
       this.http
         .post<SignInResponse>('http://localhost:3000/api/auth/signin', formData)
