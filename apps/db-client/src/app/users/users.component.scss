@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.users-page {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.users-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.users-header-card {
+  margin-bottom: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  
+  ::ng-deep .p-card-header {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    border: none;
+    padding: 2.5rem 2rem 2rem 2rem;
+  }
+  
+  ::ng-deep .p-card-body {
+    padding: 2rem;
+    background: white;
+  }
+}
+
+.card-header {
+  text-align: center;
+  color: white;
+  
+  h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.25rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  p {
+    margin: 0;
+    opacity: 0.95;
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.loading-content, .empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-content h3 {
+  margin: 0 0 0.5rem 0;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+}
+
+.empty-content p, .loading-content p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1.1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.user-card {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  ::ng-deep .p-card-body {
+    padding: 0;
+  }
+}
+
+.user-content {
+  padding: 2rem;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  
+  span {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.user-info {
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  h3 {
+    margin: 0 0 0.5rem 0;
+    color: #1f2937;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.user-email {
+  color: #6366f1;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.user-id {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: #f3f4f6;
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.user-dates {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.date-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.date-label {
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.date-value {
+  color: #1f2937;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .users-page {
+    padding: 1rem;
+  }
+  
+  .users-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .card-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .user-content {
+    padding: 1.5rem;
+  }
+}

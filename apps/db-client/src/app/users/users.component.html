@@ -1,0 +1,52 @@
+<div class="users-page">
+  <div class="users-container">
+    <p-card class="users-header-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h1>Users Management</h1>
+          <p>View and manage user accounts</p>
+        </div>
+      </ng-template>
+
+      <div *ngIf="isLoading" class="loading-state">
+        <div class="loading-content">
+          <i class="loading-spinner"></i>
+          <p>Loading users...</p>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && users.length === 0" class="empty-state">
+        <div class="empty-content">
+          <i class="empty-icon">👥</i>
+          <h3>No users found</h3>
+          <p>There are currently no users in the system.</p>
+        </div>
+      </div>
+    </p-card>
+
+    <div *ngIf="!isLoading && users.length > 0" class="users-grid">
+      <p-card class="user-card" *ngFor="let user of users">
+        <div class="user-content">
+          <div class="user-avatar">
+            <span>{{ user.name.charAt(0).toUpperCase() }}</span>
+          </div>
+          <div class="user-info">
+            <h3>{{ user.name }}</h3>
+            <p class="user-email">{{ user.email }}</p>
+            <p class="user-id">ID: {{ user.id }}</p>
+          </div>
+          <div class="user-dates">
+            <div class="date-item">
+              <small class="date-label">Created</small>
+              <small class="date-value">{{ user.createdAt | date }}</small>
+            </div>
+            <div class="date-item">
+              <small class="date-label">Updated</small>
+              <small class="date-value">{{ user.updatedAt | date }}</small>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>

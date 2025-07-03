@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<header class="app-header" *ngIf="showNavigation$ | async">
+  <nav class="navigation">
+    <a routerLink="/" class="nav-link">Home</a>
+    <a routerLink="/users" class="nav-link" routerLinkActive="active">Users</a>
+  </nav>
+</header>
+
+<main class="app-main">
+  <router-outlet></router-outlet>
+</main>

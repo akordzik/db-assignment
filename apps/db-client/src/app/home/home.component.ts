@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
 import {
   FormBuilder,
   FormGroup,
@@ -30,6 +31,7 @@ import { SignInResponse, SignInDto } from '@deskbird/interfaces'
 export class HomeComponent {
   private fb = inject(FormBuilder)
   private http = inject(HttpClient)
+  private router = inject(Router)
 
   signInForm: FormGroup<{
     [K in keyof SignInDto]: FormControl<SignInDto[K]>
@@ -57,12 +59,11 @@ export class HomeComponent {
       this.http
         .post<SignInResponse>('http://localhost:3000/api/auth/signin', formData)
         .subscribe({
-          next: (response) => {
-            console.log('Sign-in Response:', response)
+          next: () => {
             this.loading = false
+            this.router.navigate(['/users'])
           },
-          error: (error) => {
-            console.error('API Error:', error)
+          error: () => {
             this.loading = false
           },
         })
