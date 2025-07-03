@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core'
+import { RouterModule } from '@angular/router'
 
 @Component({
   imports: [RouterModule],
@@ -8,5 +8,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './app.scss',
 })
 export class App {
-  protected title = 'db-client';
+  protected title = 'db-client'
 }
