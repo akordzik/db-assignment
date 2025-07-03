@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class AppService {
-  getData(): { message: string } {
-    return { message: 'Hello API' }
+  getHealth(): { status: string; message: string } {
+    return {
+      status: 'ok',
+      message: 'DeskBird API is running',
+    }
   }
 }

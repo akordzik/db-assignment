@@ -12,6 +12,17 @@ import { PasswordModule } from 'primeng/password'
 import { ButtonModule } from 'primeng/button'
 import { CommonModule } from '@angular/common'
 
+interface SignInResponse {
+  success: boolean
+  message: string
+  user?: {
+    id: string
+    email: string
+    name: string
+  }
+  token?: string
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -44,17 +55,23 @@ export class HomeComponent {
       this.loading = true
       const formData = this.signInForm.value
 
-      this.http.get('http://localhost:3000/api').subscribe({
-        next: (response) => {
-          console.log('API Response:', response)
-          console.log('Sign in data:', formData)
-          this.loading = false
-        },
-        error: (error) => {
-          console.error('API Error:', error)
-          this.loading = false
-        },
-      })
+      this.http
+        .post<SignInResponse>('http://localhost:3000/api/auth/signin', formData)
+        .subscribe({
+          next: (response) => {
+            console.log('Sign-in Response:', response)
+            if (response.success) {
+              console.log('Sign-in successful!', response.user)
+            } else {
+              console.log('Sign-in failed:', response.message)
+            }
+            this.loading = false
+          },
+          error: (error) => {
+            console.error('API Error:', error)
+            this.loading = false
+          },
+        })
     } else {
       this.markFormGroupTouched()
     }
