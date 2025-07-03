@@ -59,11 +59,6 @@ export class HomeComponent {
         .subscribe({
           next: (response) => {
             console.log('Sign-in Response:', response)
-            if (response.success) {
-              console.log('Sign-in successful!', response.user)
-            } else {
-              console.log('Sign-in failed:', response.message)
-            }
             this.loading = false
           },
           error: (error) => {

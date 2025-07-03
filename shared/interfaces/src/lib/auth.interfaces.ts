@@ -4,12 +4,10 @@ export interface SignInDto {
 }
 
 export interface SignInResponse {
-  success: boolean
-  message: string
-  user?: {
+  user: {
     id: string
     email: string
     name: string
   }
-  token?: string
+  token: string
 }
