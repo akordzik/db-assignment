@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { SignInDto, SignInResponse } from '@deskbird/interfaces'
 
 @Injectable()
@@ -19,9 +19,6 @@ export class AuthService {
       }
     }
 
-    return {
-      success: false,
-      message: 'Invalid email or password',
-    }
+    throw new BadRequestException('Invalid email or password')
   }
 }
