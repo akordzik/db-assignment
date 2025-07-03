@@ -1,7 +1,15 @@
 <header class="app-header" *ngIf="showNavigation$ | async">
   <nav class="navigation">
-    <a routerLink="/" class="nav-link">Home</a>
-    <a routerLink="/users" class="nav-link" routerLinkActive="active">Users</a>
+    <div class="nav-links">
+      <a routerLink="/" class="nav-link">Home</a>
+      <a routerLink="/users" class="nav-link" routerLinkActive="active">Users</a>
+    </div>
+    <div class="nav-actions" *ngIf="isAuthenticated$ | async">
+      <button class="logout-button" (click)="logout()">
+        <i class="pi pi-sign-out"></i>
+        <span>Log Out</span>
+      </button>
+    </div>
   </nav>
 </header>
 

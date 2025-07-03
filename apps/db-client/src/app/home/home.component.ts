@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
+import { AuthService } from '../services/auth.service'
 import {
   FormBuilder,
   FormGroup,
@@ -32,6 +33,7 @@ export class HomeComponent {
   private fb = inject(FormBuilder)
   private http = inject(HttpClient)
   private router = inject(Router)
+  private authService = inject(AuthService)
 
   signInForm: FormGroup<{
     [K in keyof SignInDto]: FormControl<SignInDto[K]>
@@ -61,6 +63,7 @@ export class HomeComponent {
         .subscribe({
           next: () => {
             this.loading = false
+            this.authService.setAuthenticated(true)
             this.router.navigate(['/users'])
           },
           error: () => {

@@ -4,8 +4,13 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core'
 import { provideRouter } from '@angular/router'
-import { provideHttpClient, withFetch } from '@angular/common/http'
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http'
 import { appRoutes } from './app.routes'
+import { credentialsInterceptor } from './interceptors/credentials.interceptor'
 import {
   provideClientHydration,
   withEventReplay,
@@ -20,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([credentialsInterceptor])),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
