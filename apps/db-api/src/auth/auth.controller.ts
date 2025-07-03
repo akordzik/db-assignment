@@ -5,12 +5,12 @@ import {
   Res,
   HttpCode,
   Get,
-  Req,
-  UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common'
-import { Response, Request } from 'express'
+import { Response } from 'express'
 import { AuthService } from './auth.service'
 import { SignInDto } from '@deskbird/interfaces'
+import { AuthGuard } from '../common/guards/auth.guard'
 
 @Controller('auth')
 export class AuthController {
@@ -49,14 +49,9 @@ export class AuthController {
   }
 
   @Get('check')
+  @UseGuards(AuthGuard)
   @HttpCode(200)
-  async checkAuth(@Req() request: Request) {
-    const token = request.cookies?.token
-
-    if (!token || token !== 'mock-jwt-token-12345') {
-      throw new UnauthorizedException('Not authenticated')
-    }
-
+  async checkAuth() {
     return { authenticated: true }
   }
 }
