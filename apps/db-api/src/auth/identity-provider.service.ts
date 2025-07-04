@@ -5,16 +5,22 @@ import { USERS_MAP, User } from '../common/users-data'
 interface TokenPayload {
   sub: string
   email: string
-  name: string
+  role: User['role']
   iat?: number
   exp?: number
+}
+
+interface IdpUser {
+  subId: string
+  email: string
+  role: User['role']
 }
 
 @Injectable()
 export class IdentityProviderService {
   private readonly jwtSecret = 'mock-jwt-secret-key'
   private readonly jwtExpiresIn = '1h'
-  private users: Map<string, User>
+  private users: Map<string, IdpUser>
 
   constructor() {
     this.users = new Map(USERS_MAP)
@@ -33,27 +39,21 @@ export class IdentityProviderService {
     return this.generateToken(user)
   }
 
-  createUser(
-    email: string,
-    name: string,
-    role: User['role']
-  ): Pick<User, 'id'> {
+  createUser(email: string, role: User['role']): Pick<IdpUser, 'subId'> {
     if (this.users.has(email)) {
       throw new Error('User already exists')
     }
 
-    const user: User = {
-      id: crypto.randomUUID(),
+    const user = {
       subId: crypto.randomUUID(),
       email,
-      name,
       role,
-    }
+    } satisfies IdpUser
 
     this.users.set(email, user)
 
     return {
-      id: user.id,
+      subId: user.subId,
     }
   }
 
@@ -65,12 +65,12 @@ export class IdentityProviderService {
     }
   }
 
-  private generateToken(user: User): string {
-    const payload: TokenPayload = {
+  private generateToken(user: IdpUser): string {
+    const payload = {
       sub: user.subId,
       email: user.email,
-      name: user.name,
-    }
+      role: user.role,
+    } satisfies TokenPayload
 
     return jwt.sign(payload, this.jwtSecret, {
       expiresIn: this.jwtExpiresIn,
