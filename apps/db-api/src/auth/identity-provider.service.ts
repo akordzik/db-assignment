@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import * as jwt from 'jsonwebtoken'
 import { USERS_MAP, User } from '../common/users-data'
 
@@ -16,23 +16,32 @@ interface IdpUser {
   role: User['role']
 }
 
+const users = new Map(
+  Array.from(USERS_MAP.entries()).map(([email, user]) => [
+    email,
+    {
+      subId: user.subId,
+      email: user.email,
+      role: user.role,
+    } satisfies IdpUser,
+  ])
+)
+
 @Injectable()
 export class IdentityProviderService {
+  private readonly logger = new Logger(IdentityProviderService.name)
   private readonly jwtSecret = 'mock-jwt-secret-key'
   private readonly jwtExpiresIn = '1h'
-  private users: Map<string, IdpUser>
-
-  constructor() {
-    this.users = new Map(USERS_MAP)
-  }
 
   validateUser(email: string, password: string): string | null {
-    const user = this.users.get(email)
+    const user = users.get(email)
     if (!user) {
+      this.logger.warn(`User not found: ${email}`)
       return null
     }
 
     if (password !== 'admin123') {
+      this.logger.warn(`Invalid password for user: ${email}`)
       return null
     }
 
@@ -40,7 +49,7 @@ export class IdentityProviderService {
   }
 
   createUser(email: string, role: User['role']): Pick<IdpUser, 'subId'> {
-    if (this.users.has(email)) {
+    if (users.has(email)) {
       throw new Error('User already exists')
     }
 
@@ -50,11 +59,29 @@ export class IdentityProviderService {
       role,
     } satisfies IdpUser
 
-    this.users.set(email, user)
+    users.set(email, user)
+
+    this.logger.log(`Created new user: ${email} with role: ${role}`)
+    this.logger.log(
+      `Current users: ${JSON.stringify(Array.from(users.values()))}`
+    )
 
     return {
       subId: user.subId,
     }
+  }
+
+  deleteUser(email: string): void {
+    if (!users.has(email)) {
+      this.logger.warn(`User not found: ${email}`)
+    }
+
+    users.delete(email)
+
+    this.logger.log(`Deleted user: ${email}`)
+    this.logger.log(
+      `Current users: ${JSON.stringify(Array.from(users.values()))}`
+    )
   }
 
   verifyToken(token: string): TokenPayload | null {

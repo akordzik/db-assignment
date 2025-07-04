@@ -51,6 +51,12 @@ export class AuthService {
     this.clearAuthCache()
   }
 
+  getCurrentUser(): Observable<{ id: string; email: string; name: string }> {
+    return this.http.get<{ id: string; email: string; name: string }>(
+      'http://localhost:3000/api/auth/me'
+    )
+  }
+
   private clearAuthCache(): void {
     this.authCheckCache = null
   }

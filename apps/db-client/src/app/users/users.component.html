@@ -3,8 +3,11 @@
     <p-card class="users-header-card">
       <ng-template pTemplate="header">
         <div class="card-header">
-          <h1>Users Management</h1>
-          <p>View and manage user accounts</p>
+          <div class="header-content">
+            <h1>Users Management</h1>
+            <p>View and manage user accounts</p>
+          </div>
+          <p-button label="Create User" icon="pi pi-plus" (click)="onCreateUser()" class="create-user-btn" />
         </div>
       </ng-template>
 
@@ -33,7 +36,16 @@
           <h3 class="user-name">{{ user.name }}</h3>
           <p class="user-email">{{ user.email }}</p>
         </div>
+        <div class="user-actions">
+          <button *ngIf="canDeleteUser(user)" class="delete-button" (click)="onDeleteUser(user)">
+            Delete
+          </button>
+          <span *ngIf="!canDeleteUser(user)" class="current-user-badge">You</span>
+        </div>
       </div>
     </div>
+
+    <p-confirmDialog />
+    <app-user-modal [(visible)]="showUserModal" (userSaved)="onUserSaved($event)" />
   </div>
 </div>

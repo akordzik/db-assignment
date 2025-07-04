@@ -1,0 +1,43 @@
+<p-dialog [header]="isEditMode ? 'Edit User' : 'Create New User'" [(visible)]="visible" [modal]="true" [closable]="true"
+  [draggable]="false" [resizable]="false" styleClass="user-modal" (onHide)="onHide()">
+  <div class="modal-content">
+    <div class="modal-icon">
+      <i class="pi pi-user-plus" *ngIf="!isEditMode"></i>
+      <i class="pi pi-user-edit" *ngIf="isEditMode"></i>
+    </div>
+
+    <div class="modal-description">
+      <p *ngIf="!isEditMode">Fill in the details below to create a new user account</p>
+      <p *ngIf="isEditMode">Update the user information below</p>
+    </div>
+
+    <div class="user-form">
+      <div class="form-group">
+        <label for="email">
+          <i class="pi pi-envelope"></i>
+          Email Address
+        </label>
+        <input id="email" type="email" pInputText [(ngModel)]="email" placeholder="Enter email address"
+          class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="name">
+          <i class="pi pi-user"></i>
+          Full Name
+        </label>
+        <input id="name" type="text" pInputText [(ngModel)]="name" placeholder="Enter full name" class="form-control"
+          required />
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="modal-footer">
+      <p-button label="Cancel" icon="pi pi-times" [text]="true" severity="secondary" class="cancel-btn"
+        (click)="onHide()" />
+      <p-button [label]="isEditMode ? 'Update User' : 'Create User'" [icon]="isEditMode ? 'pi pi-check' : 'pi pi-plus'"
+        [disabled]="!email.trim() || !name.trim()" class="save-btn" (click)="onSave()" />
+    </div>
+  </ng-template>
+</p-dialog>

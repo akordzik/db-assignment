@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.user-modal {
+  :host ::ng-deep .p-dialog {
+    max-width: 550px;
+    width: 90vw;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    font-family: 'Inter', sans-serif;
+    
+    .p-dialog-header {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      border: none;
+      padding: 2rem 2rem 1.5rem 2rem;
+      border-radius: 20px 20px 0 0;
+      
+      .p-dialog-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .p-dialog-header-icon {
+        color: white;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+    
+    .p-dialog-content {
+      padding: 0;
+      background: white;
+    }
+    
+    .p-dialog-footer {
+      background: #f8fafc;
+      border: none;
+      padding: 1.5rem 2rem;
+      border-radius: 0 0 20px 20px;
+    }
+  }
+}
+
+.modal-content {
+  padding: 2rem;
+  background: white;
+}
+
+.modal-icon {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  
+  i {
+    font-size: 3rem;
+    color: #6366f1;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+  }
+}
+
+.modal-description {
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  p {
+    color: #6b7280;
+    font-size: 1rem;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+
+  label {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    i {
+      color: #6366f1;
+      font-size: 1rem;
+    }
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    background: #f9fafb;
+    
+    &:focus {
+      outline: none;
+      border-color: #6366f1;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    &:hover {
+      border-color: #d1d5db;
+      background: white;
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+      font-family: 'Inter', sans-serif;
+    }
+  }
+}
+
+.modal-footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  
+  .cancel-btn {
+    :host ::ng-deep .p-button {
+      color: #6b7280;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+      
+      &:hover {
+        background: #f3f4f6;
+        color: #374151;
+      }
+    }
+  }
+  
+  .save-btn {
+    :host ::ng-deep .p-button {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+      }
+      
+      &:disabled {
+        background: #d1d5db;
+        color: #9ca3af;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .user-modal {
+    :host ::ng-deep .p-dialog {
+      margin: 1rem;
+      width: calc(100vw - 2rem);
+      max-width: none;
+      
+      .p-dialog-header {
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+        
+        .p-dialog-title {
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+  
+  .modal-content {
+    padding: 1.5rem;
+  }
+  
+  .modal-icon {
+    margin-bottom: 1rem;
+    
+    i {
+      font-size: 2.5rem;
+    }
+  }
+  
+  .modal-description {
+    margin-bottom: 1.5rem;
+    
+    p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .user-form {
+    gap: 1.5rem;
+  }
+  
+  .modal-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+    
+    .cancel-btn,
+    .save-btn {
+      :host ::ng-deep .p-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}

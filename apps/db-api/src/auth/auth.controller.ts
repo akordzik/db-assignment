@@ -6,8 +6,10 @@ import {
   HttpCode,
   UseGuards,
   Head,
+  Get,
+  Req,
 } from '@nestjs/common'
-import { Response } from 'express'
+import { Response, Request } from 'express'
 import { AuthService } from './auth.service'
 import { SignInDto } from '@deskbird/interfaces'
 import { AuthGuard } from '../common/guards/auth.guard'
@@ -35,7 +37,7 @@ export class AuthController {
 
     response.cookie('token', token, {
       ...cookieOptions,
-      maxAge: ONE_MINUTE,
+      maxAge: ONE_MINUTE * 10,
     })
 
     return user
@@ -54,5 +56,11 @@ export class AuthController {
   @HttpCode(200)
   async checkAuth() {
     return null
+  }
+
+  @Get('me')
+  @UseGuards(AuthGuard)
+  async getCurrentUser(@Req() request: Request) {
+    return this.authService.getCurrentUser(request)
   }
 }

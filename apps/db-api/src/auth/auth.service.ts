@@ -1,7 +1,12 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { SignInDto, SignInResponse } from '@deskbird/interfaces'
 import { IdentityProviderService } from './identity-provider.service'
 import { PrismaService } from '../common/prisma.service'
+import { Request } from 'express'
 
 @Injectable()
 export class AuthService {
@@ -30,6 +35,19 @@ export class AuthService {
     return {
       user,
       token: maybeToken,
+    }
+  }
+
+  async getCurrentUser(request: Request) {
+    const payload = this.identityProvider.verifyToken(request.cookies?.token)
+
+    if (!payload) {
+      throw new UnauthorizedException('Invalid token')
+    }
+
+    return {
+      id: payload.sub,
+      email: payload.email,
     }
   }
 }
