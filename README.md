@@ -1,4 +1,4 @@
-# Docker Setup Guide
+# Setup Guide
 
 This monorepo uses separate Dockerfiles for better maintainability and deployment flexibility.
 
@@ -9,7 +9,12 @@ This monorepo uses separate Dockerfiles for better maintainability and deploymen
 - **Database**: PostgreSQL
 - **Shared**: Common interfaces and types
 
-## Quick Start
+## Quick Start - Docker
+
+### Prerequisites
+
+- Docker
+- Docker Compose
 
 ### Assign permissions to the shell file
 
@@ -23,7 +28,32 @@ chmod +x docker-start.sh
 ./docker-start.sh
 ```
 
-### Application info
+## Quick Start - local setup
+
+### Prerequisites
+
+- Node
+- `nx`
+
+### Install dependencies
+
+```sh
+npm ci
+```
+
+### Create .env file
+
+```sh
+cp apps/db-api/.env.example apps/db-api/.env
+```
+
+### Run service
+
+```sh
+npm run dev
+```
+
+## Application info
 
 - The database is seeded with an admin user upon API startup
 - The app uses an artificial in-memory Identity Provider (designed to mimic a service like AWS Cognito)
