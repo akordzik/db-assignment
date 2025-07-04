@@ -97,112 +97,66 @@
   font-family: 'Inter', sans-serif;
 }
 
-.users-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+.users-list {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.user-card {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  overflow: hidden;
-  background: white;
-  transition: all 0.3s ease;
+.user-row {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+  
+  &:last-child {
+    border-bottom: none;
+  }
   
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    transform: translateX(5px);
   }
-  
-  ::ng-deep .p-card-body {
-    padding: 0;
-  }
-}
-
-.user-content {
-  padding: 2rem;
 }
 
 .user-avatar {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1.5rem auto;
+  margin-right: 1.5rem;
+  flex-shrink: 0;
   
   span {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
   }
 }
 
-.user-info {
-  text-align: center;
-  margin-bottom: 2rem;
-  
-  h3 {
-    margin: 0 0 0.5rem 0;
-    color: #1f2937;
-    font-size: 1.3rem;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-  }
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  margin: 0 0 0.25rem 0;
+  color: #1f2937;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
 }
 
 .user-email {
   color: #6366f1;
-  margin: 0 0 0.5rem 0;
-  font-weight: 500;
-  font-size: 1rem;
-  font-family: 'Inter', sans-serif;
-}
-
-.user-id {
-  color: #6b7280;
   margin: 0;
-  font-size: 0.9rem;
-  font-family: 'JetBrains Mono', monospace;
-  background: #f3f4f6;
-  padding: 0.25rem 0.75rem;
-  border-radius: 8px;
-  display: inline-block;
-}
-
-.user-dates {
-  border-top: 1px solid #e5e7eb;
-  padding-top: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.date-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-}
-
-.date-label {
-  color: #6b7280;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
-  font-family: 'Inter', sans-serif;
-}
-
-.date-value {
-  color: #1f2937;
-  font-size: 0.85rem;
   font-weight: 500;
+  font-size: 0.95rem;
   font-family: 'Inter', sans-serif;
 }
 
@@ -211,16 +165,23 @@
     padding: 1rem;
   }
   
-  .users-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
   .card-header h1 {
     font-size: 1.75rem;
   }
   
-  .user-content {
-    padding: 1.5rem;
+  .user-row {
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .user-avatar {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .user-details {
+    text-align: center;
   }
 }

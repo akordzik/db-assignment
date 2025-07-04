@@ -4,8 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start:api": "nx serve db-api",
+    "start:api:dev": "nx serve db-api --configuration=development",
     "start:client": "nx serve db-client",
-    "dev": "concurrently \"npm:start:api\" \"npm:start:client\"",
+    "dev": "concurrently \"npm:start:api:dev\" \"npm:start:client\"",
     "db:generate": "cd apps/db-api && npx prisma generate",
     "db:migrate": "cd apps/db-api && npx prisma migrate dev",
     "db:studio": "cd apps/db-api && npx prisma studio"
@@ -72,6 +73,7 @@
     "concurrently": "^9.2.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
+    "nodemon": "^3.0.2",
     "nx": "21.2.1",
     "prettier": "^2.6.2",
     "tslib": "^2.3.0",

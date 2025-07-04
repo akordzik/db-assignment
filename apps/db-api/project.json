@@ -18,19 +18,19 @@
     },
     "serve": {
       "continuous": true,
-      "executor": "@nx/js:node",
+      "executor": "nx:run-commands",
       "defaultConfiguration": "development",
-      "dependsOn": ["build"],
       "options": {
-        "buildTarget": "db-api:build",
-        "runBuildTargetDependencies": false
+        "command": "nodemon",
+        "cwd": "apps/db-api"
       },
       "configurations": {
         "development": {
-          "buildTarget": "db-api:build:development"
+          "command": "nodemon",
+          "cwd": "apps/db-api"
         },
         "production": {
-          "buildTarget": "db-api:build:production"
+          "command": "nx build db-api && node dist/apps/db-api/main.js"
         }
       }
     }

@@ -1,0 +1,14 @@
+{
+  "watch": ["../../apps/db-api/src"],
+  "ext": "ts,js,json",
+  "ignore": [
+    "../../apps/db-api/src/**/*.spec.ts",
+    "../../node_modules",
+    "../../dist"
+  ],
+  "exec": "cd ../.. && nx build db-api --configuration=development && node dist/apps/db-api/main.js",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "delay": 1000
+}

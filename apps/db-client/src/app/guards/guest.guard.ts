@@ -1,20 +1,28 @@
 import { inject } from '@angular/core'
 import { Router, type CanActivateFn } from '@angular/router'
-import { HttpClient } from '@angular/common/http'
-import { map, catchError } from 'rxjs/operators'
-import { of } from 'rxjs'
+import { AuthService } from '../services/auth.service'
+import { map, switchMap, take } from 'rxjs/operators'
 
 export const guestGuard: CanActivateFn = () => {
   const router = inject(Router)
-  const http = inject(HttpClient)
+  const authService = inject(AuthService)
 
-  return http.head('http://localhost:3000/api/auth/check').pipe(
-    map(() => {
-      router.navigate(['/users'])
-      return false
-    }),
-    catchError(() => {
-      return of(true)
+  return authService.isAuthenticated$.pipe(
+    take(1),
+    switchMap((isAuthenticated) => {
+      if (isAuthenticated) {
+        router.navigate(['/users'])
+        return [false]
+      }
+      return authService.checkAuthentication().pipe(
+        map((authenticated) => {
+          if (authenticated) {
+            router.navigate(['/users'])
+            return false
+          }
+          return true
+        })
+      )
     })
   )
 }
