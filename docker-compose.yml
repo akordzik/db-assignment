@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: deskbird
+      POSTGRES_USER: deskbird
+      POSTGRES_PASSWORD: deskbird
+    ports:
+      - '5432:5432'
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U deskbird']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://deskbird:deskbird@db:5432/deskbird
+      - SESSION_LENGTH_MINUTES=10
+    ports:
+      - '3000:3000'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    environment:
+      - NODE_ENV=production
+      - API_URL=http://api:3000
+    ports:
+      - '4000:4000'
+    depends_on:
+      - api

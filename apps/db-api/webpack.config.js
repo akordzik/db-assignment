@@ -17,6 +17,9 @@ module.exports = {
       generatePackageJson: true,
     }),
   ],
+  externals: {
+    '@prisma/client': 'commonjs @prisma/client',
+  },
   watchOptions: {
     ignored: /node_modules/,
     poll: 1000,

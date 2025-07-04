@@ -9,6 +9,7 @@ import { ConfirmationService } from 'primeng/api'
 import { SignInResponse, User } from '@deskbird/interfaces'
 import { UserModalComponent } from './user-modal/user-modal.component'
 import { AuthService } from '../services/auth.service'
+import { ConfigService } from '../services/config.service'
 
 @Component({
   selector: 'app-users',
@@ -28,6 +29,7 @@ import { AuthService } from '../services/auth.service'
 export class UsersComponent implements OnInit {
   private http = inject(HttpClient)
   private authService = inject(AuthService)
+  private configService = inject(ConfigService)
   private confirmationService = inject(ConfirmationService)
 
   users: User[] = []
@@ -46,7 +48,7 @@ export class UsersComponent implements OnInit {
   }
 
   private loadUsers() {
-    this.http.get<User[]>('http://localhost:3000/api/users').subscribe({
+    this.http.get<User[]>(`${this.configService.apiBaseUrl}/users`).subscribe({
       next: (users) => {
         this.users = users
         this.isLoading = false
@@ -70,9 +72,12 @@ export class UsersComponent implements OnInit {
   onUserSaved(userData: { email: string; name: string }) {
     if (this.editingUser) {
       this.http
-        .patch<User>(`http://localhost:3000/api/users/${this.editingUser.id}`, {
-          name: userData.name,
-        })
+        .patch<User>(
+          `${this.configService.apiBaseUrl}/users/${this.editingUser.id}`,
+          {
+            name: userData.name,
+          }
+        )
         .subscribe({
           next: (updatedUser) => {
             const index = this.users.findIndex(
@@ -90,7 +95,7 @@ export class UsersComponent implements OnInit {
         })
     } else {
       this.http
-        .post<User>('http://localhost:3000/api/users', userData)
+        .post<User>(`${this.configService.apiBaseUrl}/users`, userData)
         .subscribe({
           next: (newUser) => {
             this.users.push(newUser)
@@ -114,7 +119,7 @@ export class UsersComponent implements OnInit {
       rejectLabel: 'Cancel',
       accept: () => {
         this.http
-          .delete(`http://localhost:3000/api/users/${user.id}`)
+          .delete(`${this.configService.apiBaseUrl}/users/${user.id}`)
           .subscribe({
             next: () => {
               this.users = this.users.filter((u) => u.id !== user.id)

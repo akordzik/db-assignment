@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { AuthService } from '../services/auth.service'
+import { ConfigService } from '../services/config.service'
 import {
   FormBuilder,
   FormGroup,
@@ -34,6 +35,7 @@ export class HomeComponent {
   private http = inject(HttpClient)
   private router = inject(Router)
   private authService = inject(AuthService)
+  private configService = inject(ConfigService)
 
   signInForm: FormGroup<{
     [K in keyof SignInDto]: FormControl<SignInDto[K]>
@@ -59,7 +61,10 @@ export class HomeComponent {
       const formData = this.signInForm.getRawValue()
 
       this.http
-        .post<SignInResponse>('http://localhost:3000/api/auth/signin', formData)
+        .post<SignInResponse>(
+          `${this.configService.apiBaseUrl}/auth/signin`,
+          formData
+        )
         .subscribe({
           next: (response) => {
             this.loading = false

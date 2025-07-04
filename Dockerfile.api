@@ -1,0 +1,32 @@
+FROM node:20-alpine AS base
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY nx.json tsconfig.base.json ./
+COPY shared ./shared
+
+RUN npm ci --only=production && npm cache clean --force
+
+FROM base AS build
+
+RUN npm ci
+
+COPY apps/db-api ./apps/db-api
+
+RUN npx nx build db-api
+
+FROM base AS runtime
+
+COPY --from=build /app/dist/apps/db-api ./dist/apps/db-api
+COPY --from=build /app/apps/db-api/generated/prisma ./generated/prisma
+COPY --from=build /app/apps/db-api/prisma ./apps/db-api/prisma
+COPY --from=build /app/apps/db-api/init-db.sql ./apps/db-api/init-db.sql
+
+WORKDIR /app
+
+RUN npx prisma generate --schema=./apps/db-api/prisma/schema.prisma
+
+EXPOSE 3000
+
+CMD ["node", "dist/apps/db-api/main.js"]

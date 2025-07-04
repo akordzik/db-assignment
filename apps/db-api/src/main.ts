@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalFilters(new GlobalExceptionFilter())
 
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: /^http:\/\/localhost(:\d+)?$/,
     methods: 'GET,PATCH,POST,OPTIONS,DELETE',
     credentials: true,
   })

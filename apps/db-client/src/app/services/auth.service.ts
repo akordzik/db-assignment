@@ -4,13 +4,15 @@ import { BehaviorSubject, Observable } from 'rxjs'
 import { map, catchError, shareReplay } from 'rxjs/operators'
 import { of } from 'rxjs'
 import { isPlatformBrowser } from '@angular/common'
-import { SignInResponse, UserRole } from '@deskbird/interfaces'
+import { SignInResponse } from '@deskbird/interfaces'
+import { ConfigService } from './config.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient)
+  private configService = inject(ConfigService)
   private platformId = inject(PLATFORM_ID)
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false)
   private authCheckCache: Observable<boolean> | null = null
@@ -23,7 +25,7 @@ export class AuthService {
     }
 
     this.authCheckCache = this.http
-      .head('http://localhost:3000/api/auth/check')
+      .head(`${this.configService.apiBaseUrl}/auth/check`)
       .pipe(
         map(() => {
           this.isAuthenticatedSubject.next(true)
@@ -41,14 +43,16 @@ export class AuthService {
   }
 
   signOut(): Observable<unknown> {
-    return this.http.post('http://localhost:3000/api/auth/signout', {}).pipe(
-      map((response) => {
-        this.isAuthenticatedSubject.next(false)
-        this.clearAuthCache()
-        this.removeItemFromStorage('currentUser')
-        return response
-      })
-    )
+    return this.http
+      .post(`${this.configService.apiBaseUrl}/auth/signout`, {})
+      .pipe(
+        map((response) => {
+          this.isAuthenticatedSubject.next(false)
+          this.clearAuthCache()
+          this.removeItemFromStorage('currentUser')
+          return response
+        })
+      )
   }
 
   setAuthenticated(status: boolean): void {
@@ -61,7 +65,7 @@ export class AuthService {
 
   getCurrentUser(): Observable<{ id: string; email: string; name: string }> {
     return this.http.get<{ id: string; email: string; name: string }>(
-      'http://localhost:3000/api/auth/me'
+      `${this.configService.apiBaseUrl}/auth/me`
     )
   }
 
