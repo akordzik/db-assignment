@@ -12,6 +12,15 @@ import { AuthService } from './auth.service'
 import { SignInDto } from '@deskbird/interfaces'
 import { AuthGuard } from '../common/guards/auth.guard'
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  domain: process.env.NODE_ENV === 'production' ? undefined : 'localhost',
+} as const
+
+const ONE_MINUTE = 60 * 1000
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -25,11 +34,8 @@ export class AuthController {
     const { user, token } = await this.authService.signIn(signInDto)
 
     response.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: 24 * 60 * 60 * 1000,
-      domain: process.env.NODE_ENV === 'production' ? undefined : 'localhost',
+      ...cookieOptions,
+      maxAge: ONE_MINUTE,
     })
 
     return user
@@ -38,12 +44,7 @@ export class AuthController {
   @Post('signout')
   @HttpCode(200)
   async signOut(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      domain: process.env.NODE_ENV === 'production' ? undefined : 'localhost',
-    })
+    response.clearCookie('token', cookieOptions)
 
     return { message: 'Signed out successfully' }
   }
