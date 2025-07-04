@@ -8,7 +8,7 @@ export const authGuard: CanActivateFn = () => {
   const router = inject(Router)
   const http = inject(HttpClient)
 
-  return http.get('http://localhost:3000/api/auth/check').pipe(
+  return http.head('http://localhost:3000/api/auth/check').pipe(
     map(() => true),
     catchError(() => {
       router.navigate(['/'])

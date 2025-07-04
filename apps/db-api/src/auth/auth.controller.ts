@@ -4,8 +4,8 @@ import {
   Body,
   Res,
   HttpCode,
-  Get,
   UseGuards,
+  Head,
 } from '@nestjs/common'
 import { Response } from 'express'
 import { AuthService } from './auth.service'
@@ -48,10 +48,10 @@ export class AuthController {
     return { message: 'Signed out successfully' }
   }
 
-  @Get('check')
+  @Head('check')
   @UseGuards(AuthGuard)
   @HttpCode(200)
   async checkAuth() {
-    return { authenticated: true }
+    return null
   }
 }

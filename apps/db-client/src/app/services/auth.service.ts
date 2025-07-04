@@ -14,7 +14,7 @@ export class AuthService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable()
 
   checkAuthentication(): Observable<boolean> {
-    return this.http.get('http://localhost:3000/api/auth/check').pipe(
+    return this.http.head('http://localhost:3000/api/auth/check').pipe(
       map(() => {
         this.isAuthenticatedSubject.next(true)
         return true

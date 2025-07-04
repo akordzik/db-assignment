@@ -8,7 +8,7 @@ export const guestGuard: CanActivateFn = () => {
   const router = inject(Router)
   const http = inject(HttpClient)
 
-  return http.get('http://localhost:3000/api/auth/check').pipe(
+  return http.head('http://localhost:3000/api/auth/check').pipe(
     map(() => {
       router.navigate(['/users'])
       return false
