@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { DialogModule } from 'primeng/dialog'
@@ -19,7 +26,7 @@ import { User } from '@deskbird/interfaces'
   templateUrl: './user-modal.component.html',
   styleUrl: './user-modal.component.scss',
 })
-export class UserModalComponent implements OnInit {
+export class UserModalComponent implements OnInit, OnChanges {
   @Input() visible = false
   @Input() user: User | null = null
   @Output() visibleChange = new EventEmitter<boolean>()
@@ -30,10 +37,20 @@ export class UserModalComponent implements OnInit {
   isEditMode = false
 
   ngOnInit() {
+    this.updateFormBasedOnUser()
+  }
+
+  ngOnChanges() {
+    this.updateFormBasedOnUser()
+  }
+
+  private updateFormBasedOnUser() {
     this.isEditMode = !!this.user
     if (this.user) {
       this.email = this.user.email
       this.name = this.user.name
+    } else {
+      this.resetForm()
     }
   }
 

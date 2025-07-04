@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Delete,
   Body,
   Param,
@@ -26,6 +27,15 @@ export class UsersController {
   @Roles('admin')
   async createUser(@Body() userData: { email: string; name: string }) {
     return this.usersService.createUser(userData)
+  }
+
+  @Patch(':id')
+  @Roles('admin')
+  async updateUser(
+    @Param('id') id: string,
+    @Body() userData: { name: string }
+  ) {
+    return this.usersService.updateUser(id, userData)
   }
 
   @Delete(':id')

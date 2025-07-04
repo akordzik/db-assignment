@@ -45,6 +45,24 @@ export class UsersService {
     }
   }
 
+  async updateUser(id: string, userData: { name: string }): Promise<User> {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        name: userData.name,
+        updated_at: new Date(),
+      },
+    })
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      createdAt: user.created_at.toISOString(),
+      updatedAt: user.updated_at.toISOString(),
+    }
+  }
+
   async deleteUser(id: string): Promise<{ message: string }> {
     const { email } = await this.prisma.user.delete({
       where: { id },

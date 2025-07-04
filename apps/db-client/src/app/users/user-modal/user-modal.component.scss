@@ -137,7 +137,41 @@
       color: #9ca3af;
       font-family: 'Inter', sans-serif;
     }
+    
+    &:disabled {
+      background: #f3f4f6 !important;
+      color: #9ca3af !important;
+      border-color: #e5e7eb !important;
+      cursor: not-allowed !important;
+      
+      &:hover {
+        background: #f3f4f6 !important;
+        border-color: #e5e7eb !important;
+      }
+      
+      &:focus {
+        background: #f3f4f6 !important;
+        border-color: #e5e7eb !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+    }
   }
+}
+
+// Additional specific selector for disabled input
+input[disabled].form-control {
+  background: #f3f4f6 !important;
+  color: #9ca3af !important;
+  border-color: #e5e7eb !important;
+  cursor: not-allowed !important;
+}
+
+:host ::ng-deep input[disabled] {
+  background: #f3f4f6 !important;
+  color: #9ca3af !important;
+  border-color: #e5e7eb !important;
+  cursor: not-allowed !important;
 }
 
 .modal-footer {

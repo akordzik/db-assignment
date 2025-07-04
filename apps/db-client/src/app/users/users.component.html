@@ -38,6 +38,9 @@
           <p class="user-email">{{ user.email }}</p>
         </div>
         <div class="user-actions">
+          <button *ngIf="canDeleteUser(user) && isCurrentUserAdmin()" class="edit-button" (click)="onEditUser(user)">
+            Edit
+          </button>
           <button *ngIf="canDeleteUser(user) && isCurrentUserAdmin()" class="delete-button"
             (click)="onDeleteUser(user)">
             Delete
@@ -48,6 +51,6 @@
     </div>
 
     <p-confirmDialog />
-    <app-user-modal [(visible)]="showUserModal" (userSaved)="onUserSaved($event)" />
+    <app-user-modal [(visible)]="showUserModal" [user]="editingUser" (userSaved)="onUserSaved($event)" />
   </div>
 </div>

@@ -8,7 +8,7 @@
 
     <div class="modal-description">
       <p *ngIf="!isEditMode">Fill in the details below to create a new user account</p>
-      <p *ngIf="isEditMode">Update the user information below</p>
+      <p *ngIf="isEditMode">Update the user name below. Email cannot be changed.</p>
     </div>
 
     <div class="user-form">
@@ -18,7 +18,7 @@
           Email Address
         </label>
         <input id="email" type="email" pInputText [(ngModel)]="email" placeholder="Enter email address"
-          class="form-control" required />
+          class="form-control" [disabled]="isEditMode" required />
       </div>
 
       <div class="form-group">
