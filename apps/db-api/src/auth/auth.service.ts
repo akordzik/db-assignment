@@ -18,7 +18,7 @@ export class AuthService {
   async signIn(signInDto: SignInDto): Promise<SignInResponse> {
     const { email, password } = signInDto
 
-    const maybeToken = this.identityProvider.validateUser(email, password)
+    const maybeToken = await this.identityProvider.validateUser(email, password)
     if (!maybeToken) {
       throw new BadRequestException('Authentication failed')
     }

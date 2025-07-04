@@ -22,6 +22,7 @@ const cookieOptions = {
 } as const
 
 const ONE_MINUTE = 60 * 1000
+const SESSION_LENGTH_MINUTES = Number(process.env.SESSION_LENGTH_MINUTES) || 30
 
 @Controller('auth')
 export class AuthController {
@@ -37,7 +38,7 @@ export class AuthController {
 
     response.cookie('token', signInResponse.token, {
       ...cookieOptions,
-      maxAge: ONE_MINUTE * 10,
+      maxAge: ONE_MINUTE * SESSION_LENGTH_MINUTES,
     })
 
     return signInResponse

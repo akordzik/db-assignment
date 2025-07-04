@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common'
-import * as jwt from 'jsonwebtoken'
+import { sign, verify, SignOptions } from 'jsonwebtoken'
 import { USERS_MAP, User } from '../common/users-data'
 
 interface TokenPayload {
@@ -31,9 +31,13 @@ const users = new Map(
 export class IdentityProviderService {
   private readonly logger = new Logger(IdentityProviderService.name)
   private readonly jwtSecret = 'mock-jwt-secret-key'
-  private readonly jwtExpiresIn = '1h'
+  private readonly jwtExpiresIn = `${+(
+    process.env.SESSION_LENGTH_MINUTES || 30
+  )}m` as const
 
-  validateUser(email: string, password: string): string | null {
+  async validateUser(email: string, password: string): Promise<string | null> {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     const user = users.get(email)
     if (!user) {
       this.logger.warn(`User not found: ${email}`)
@@ -86,7 +90,7 @@ export class IdentityProviderService {
 
   verifyToken(token: string): TokenPayload | null {
     try {
-      return jwt.verify(token, this.jwtSecret) as TokenPayload
+      return verify(token, this.jwtSecret) as TokenPayload
     } catch {
       return null
     }
@@ -99,8 +103,10 @@ export class IdentityProviderService {
       role: user.role,
     } satisfies TokenPayload
 
-    return jwt.sign(payload, this.jwtSecret, {
+    const options: SignOptions = {
       expiresIn: this.jwtExpiresIn,
-    })
+    }
+
+    return sign(payload, this.jwtSecret, options)
   }
 }
