@@ -1,3 +1,4 @@
+import { UserRole } from '@deskbird/interfaces'
 import { v4 as uuidv4 } from 'uuid'
 
 export interface User {
@@ -5,7 +6,7 @@ export interface User {
   subId: string
   email: string
   name: string
-  role: 'admin' | 'regular'
+  role: UserRole
 }
 
 export const USERS_MAP = new Map<string, User>([

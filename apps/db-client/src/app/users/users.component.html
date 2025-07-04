@@ -7,7 +7,8 @@
             <h1>Users Management</h1>
             <p>View and manage user accounts</p>
           </div>
-          <p-button label="Create User" icon="pi pi-plus" (click)="onCreateUser()" class="create-user-btn" />
+          <p-button *ngIf="isCurrentUserAdmin()" label="Create User" icon="pi pi-plus" (click)="onCreateUser()"
+            class="create-user-btn" />
         </div>
       </ng-template>
 
@@ -37,10 +38,11 @@
           <p class="user-email">{{ user.email }}</p>
         </div>
         <div class="user-actions">
-          <button *ngIf="canDeleteUser(user)" class="delete-button" (click)="onDeleteUser(user)">
+          <button *ngIf="canDeleteUser(user) && isCurrentUserAdmin()" class="delete-button"
+            (click)="onDeleteUser(user)">
             Delete
           </button>
-          <span *ngIf="!canDeleteUser(user)" class="current-user-badge">You</span>
+          <span *ngIf="!canDeleteUser(user) && isCurrentUserAdmin()" class="current-user-badge">You</span>
         </div>
       </div>
     </div>

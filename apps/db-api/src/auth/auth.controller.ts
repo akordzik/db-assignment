@@ -33,14 +33,14 @@ export class AuthController {
     @Body() signInDto: SignInDto,
     @Res({ passthrough: true }) response: Response
   ) {
-    const { user, token } = await this.authService.signIn(signInDto)
+    const signInResponse = await this.authService.signIn(signInDto)
 
-    response.cookie('token', token, {
+    response.cookie('token', signInResponse.token, {
       ...cookieOptions,
       maxAge: ONE_MINUTE * 10,
     })
 
-    return user
+    return signInResponse
   }
 
   @Post('signout')

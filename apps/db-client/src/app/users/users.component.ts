@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button'
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { TooltipModule } from 'primeng/tooltip'
 import { ConfirmationService } from 'primeng/api'
-import { User } from '@deskbird/interfaces'
+import { SignInResponse, User, UserRole } from '@deskbird/interfaces'
 import { UserModalComponent } from './user-modal/user-modal.component'
 import { AuthService } from '../services/auth.service'
 
@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
   private confirmationService = inject(ConfirmationService)
 
   users: User[] = []
-  currentUser: { id: string; email: string; name: string } | null = null
+  currentUser: SignInResponse['user'] | null = null
   isLoading = true
   showUserModal = false
 
@@ -41,14 +41,7 @@ export class UsersComponent implements OnInit {
   }
 
   private loadCurrentUser() {
-    this.authService.getCurrentUser().subscribe({
-      next: (user) => {
-        this.currentUser = user
-      },
-      error: (error) => {
-        console.error('Error loading current user:', error)
-      },
-    })
+    this.currentUser = this.authService.getCurrentUserFromStorage()
   }
 
   private loadUsers() {
@@ -107,5 +100,9 @@ export class UsersComponent implements OnInit {
 
   canDeleteUser(user: User): boolean {
     return this.currentUser ? user.email !== this.currentUser.email : false
+  }
+
+  isCurrentUserAdmin(): boolean {
+    return this.currentUser?.role === 'admin'
   }
 }

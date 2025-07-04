@@ -61,8 +61,9 @@ export class HomeComponent {
       this.http
         .post<SignInResponse>('http://localhost:3000/api/auth/signin', formData)
         .subscribe({
-          next: () => {
+          next: (response) => {
             this.loading = false
+            this.authService.saveUserToStorage(response.user)
             this.authService.setAuthenticated(true)
             this.router.navigate(['/users'])
           },

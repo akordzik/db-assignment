@@ -23,6 +23,11 @@ export class AuthService {
       throw new BadRequestException('Authentication failed')
     }
 
+    const parsedToken = this.identityProvider.verifyToken(maybeToken)
+    if (!parsedToken) {
+      throw new UnauthorizedException('Invalid token')
+    }
+
     const user = await this.prisma.user.findFirstOrThrow({
       where: { email },
       select: {
@@ -33,7 +38,12 @@ export class AuthService {
     })
 
     return {
-      user,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: parsedToken.role,
+      },
       token: maybeToken,
     }
   }
